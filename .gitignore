@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment & config files (may contain secrets)
+.env
+.env.local
+.env.*.local
+server/config.json
+
+# Docker
+docker-compose.override.yml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Reports (generated files)
+server/reports/
+
+# Claude AI assistant
+.claude/
+
+# agent-trade-kit is a separate project with its own git repo
+agent-trade-kit/
+
+# Plan files
+plan.md
