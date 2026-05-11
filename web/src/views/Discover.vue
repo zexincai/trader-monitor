@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb style="margin-bottom: 16px">
-      <el-breadcrumb-item :to="{ path: '/' }">总览</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/dashboard' }">总览</el-breadcrumb-item>
       <el-breadcrumb-item>发现交易员</el-breadcrumb-item>
     </el-breadcrumb>
 

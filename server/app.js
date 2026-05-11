@@ -5,7 +5,9 @@ import tradersRouter from "./routes/traders.js";
 import snapshotsRouter from "./routes/snapshots.js";
 import positionsRouter from "./routes/positions.js";
 import newsRouter from "./routes/news.js";
+import tokensRouter from "./routes/tokens.js";
 import { runMonitor } from "./services/monitor.js";
+import { startTokenMonitor } from "./services/token-monitor.js";
 
 const app = express();
 
@@ -17,6 +19,7 @@ app.use("/api/traders", tradersRouter);
 app.use("/api/snapshots", snapshotsRouter);
 app.use("/api/positions", positionsRouter);
 app.use("/api/news", newsRouter);
+app.use("/api/tokens", tokensRouter);
 
 // 健康检查
 app.get("/api/health", (_req, res) => {
@@ -101,9 +104,15 @@ app.listen(config.server.port, () => {
   console.log(`  GET  /api/positions?traderId=&date=`);
   console.log(`  GET  /api/positions/preferences?traderId=`);
   console.log(`  GET  /api/news?type=important&limit=20`);
+  console.log(`  GET  /api/tokens`);
+  console.log(`  POST /api/tokens`);
+  console.log(`  DELETE /api/tokens/:instId`);
+  console.log(`  GET  /api/tokens/status`);
+  console.log(`  POST /api/tokens/run`);
   console.log(`  POST /api/monitor/run`);
   console.log(`  GET  /api/monitor/logs`);
   console.log("");
 
   startScheduler();
+  startTokenMonitor();
 });

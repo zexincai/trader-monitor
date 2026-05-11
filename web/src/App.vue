@@ -2,7 +2,7 @@
   <el-container style="min-height: 100vh">
     <el-header style="background: #1a1a2e; padding: 0 20px; display: flex; align-items: center; justify-content: space-between">
       <div style="display: flex; align-items: center; gap: 12px">
-        <span style="font-size: 22px; color: #fff; font-weight: bold">📊 交易员监控</span>
+        <span style="font-size: 22px; color: #fff; font-weight: bold">📰 Crypto资讯</span>
       </div>
       <el-menu
         mode="horizontal"
@@ -12,9 +12,11 @@
         text-color="#aaa"
         active-text-color="#fff"
       >
-        <el-menu-item index="/">总览看板</el-menu-item>
+        <el-menu-item index="/">资讯</el-menu-item>
+        <el-menu-item index="/dashboard">总览</el-menu-item>
         <el-menu-item index="/positions">持仓监控</el-menu-item>
         <el-menu-item index="/discover">发现交易员</el-menu-item>
+        <el-menu-item index="/tokens">代币监控</el-menu-item>
       </el-menu>
     </el-header>
     <el-main style="background: #f5f7fa; padding: 20px">

@@ -41,3 +41,21 @@ export function fetchPositions(traderId, date) {
 export function fetchPreferences(traderId) {
   return get("/positions/preferences", { traderId });
 }
+
+// ── 代币监控 ──
+
+export function fetchTokens() {
+  return get("/tokens");
+}
+
+export function fetchTokensStatus() {
+  return get("/tokens/status");
+}
+
+export function addToken(instId, label) {
+  return api.post("/tokens", { instId, label }).then((r) => r.data);
+}
+
+export function deleteToken(instId) {
+  return api.delete(`/tokens/${encodeURIComponent(instId)}`).then((r) => r.data);
+}
