@@ -1,53 +1,37 @@
 <template>
   <div>
     <!-- 统计卡片 -->
-    <el-row :gutter="16" style="margin-bottom: 20px">
-      <el-col :span="6">
-        <el-card shadow="hover">
-          <div class="stat-card">
-            <div class="stat-value">{{ traders.length }}</div>
-            <div class="stat-label">监控人数</div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover">
-          <div class="stat-card">
-            <div class="stat-value" :class="summary.totalPnl2d >= 0 ? 'profit' : 'loss'">
-              {{ fmtUSD(summary.totalPnl2d) }}
-            </div>
-            <div class="stat-label">近2天总盈亏</div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover">
-          <div class="stat-card">
-            <div class="stat-value">{{ fmtPct(summary.avgWinRate) }}</div>
-            <div class="stat-label">平均胜率 (30天)</div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover">
-          <div class="stat-card">
-            <div class="stat-value">{{ fmtPct(summary.avgDrawdown) }}</div>
-            <div class="stat-label">平均最大回撤</div>
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+    <div class="page-section">
+      <el-row :gutter="16">
+        <el-col :xs="12" :sm="12" :md="6">
+          <StatCard label="监控人数" :value="traders.length" />
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="6">
+          <StatCard
+            label="近2天总盈亏"
+            :value="fmtUSD(summary.totalPnl2d)"
+            :trend="summary.totalPnl2d >= 0 ? 'up' : 'down'"
+          />
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="6">
+          <StatCard label="平均胜率 (30天)" :value="fmtPct(summary.avgWinRate)" />
+        </el-col>
+        <el-col :xs="12" :sm="12" :md="6">
+          <StatCard label="平均最大回撤" :value="fmtPct(summary.avgDrawdown)" />
+        </el-col>
+      </el-row>
+    </div>
 
     <!-- 图表行 -->
-    <el-row :gutter="16" style="margin-bottom: 20px">
+    <el-row :gutter="16" class="page-section">
       <el-col :span="14">
-        <el-card shadow="hover">
+        <el-card>
           <template #header><strong>近30天盈亏趋势</strong></template>
           <v-chart :option="pnlTrendOption" style="height: 320px" autoresize />
         </el-card>
       </el-col>
       <el-col :span="10">
-        <el-card shadow="hover">
+        <el-card>
           <template #header><strong>风险收益分布</strong></template>
           <v-chart :option="riskScatterOption" style="height: 320px" autoresize />
         </el-card>
@@ -55,14 +39,16 @@
     </el-row>
 
     <!-- 交易员排名 -->
-    <el-card shadow="hover">
+    <el-card>
       <template #header><strong>交易员绩效排名</strong></template>
       <el-table :data="traders" stripe highlight-current-row @row-click="goDetail" style="cursor: pointer">
         <el-table-column type="index" label="#" width="50" />
         <el-table-column prop="nick_name" label="交易员" width="140" />
         <el-table-column label="30天盈亏" sortable prop="pnl_30d" width="120">
           <template #default="{ row }">
-            <span :class="row.pnl_30d >= 0 ? 'profit' : 'loss'">{{ fmtUSD(row.pnl_30d) }}</span>
+            <span :class="Number(row.pnl_30d) >= 0 ? 'value-positive' : 'value-negative'">
+              {{ fmtUSD(row.pnl_30d) }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column label="收益率" sortable prop="pnl_ratio" width="100">
@@ -98,6 +84,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import { LineChart, ScatterChart } from "echarts/charts";
 import { GridComponent, TooltipComponent, LegendComponent } from "echarts/components";
 import { fetchLatestSnapshots } from "../api/index.js";
+import StatCard from "../components/StatCard.vue";
 
 use([CanvasRenderer, LineChart, ScatterChart, GridComponent, TooltipComponent, LegendComponent]);
 
@@ -127,6 +114,21 @@ const summary = computed(() => {
   };
 });
 
+const MONO = {
+  positive: '#2d5a3d',
+  negative: '#ba1a1a',
+  c1: '#1a1c1c',
+  c2: '#4c4546',
+  c3: '#7e7576',
+  c4: '#5d5f5f',
+  c5: '#2f3131',
+  c6: '#cfc4c5',
+  c7: '#848484',
+  c8: '#c6c6c6',
+};
+
+const MONO_SERIES = [MONO.c1, MONO.c2, MONO.c3, MONO.c4, MONO.c5, MONO.c6, MONO.c7, MONO.c8];
+
 const pnlTrendOption = computed(() => ({
   tooltip: { trigger: "axis" },
   legend: { bottom: 0 },
@@ -141,13 +143,14 @@ const pnlTrendOption = computed(() => ({
       },
     },
   },
-  series: traders.value.map((t) => ({
+  series: traders.value.map((t, i) => ({
     name: t.nick_name,
     type: "line",
     data: [Number(t.pnl_2d || 0), Number(t.pnl_1w || 0), Number(t.pnl_1m || 0)],
     smooth: true,
     symbol: "circle",
     symbolSize: 8,
+    itemStyle: { color: MONO_SERIES[i % MONO_SERIES.length] },
   })),
 }));
 
@@ -174,6 +177,7 @@ const riskScatterOption = computed(() => ({
       name: t.nick_name,
       value: [Number(t.pnl_ratio || 0), Math.abs(Number(t.max_drawdown || 0)), Number(t.asset || 0)],
     })),
+    itemStyle: { color: MONO.c1 },
     label: {
       show: true,
       formatter: (p) => p.name,
@@ -198,9 +202,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.stat-card { text-align: center; padding: 8px 0; }
-.stat-value { font-size: 28px; font-weight: 700; color: #303133; }
-.stat-label { font-size: 13px; color: #909399; margin-top: 4px; }
-.profit { color: #67c23a; }
-.loss { color: #f56c6c; }
+/* ── el-row spacing is now handled by page-section ── */
 </style>

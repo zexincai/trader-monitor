@@ -1,11 +1,11 @@
 <template>
   <div>
-    <!-- 定时任务 -->
-    <el-row :gutter="16" style="margin-bottom: 20px">
+    <!-- 配置与概览 -->
+    <el-row :gutter="16" class="page-section">
       <el-col :span="12">
-        <el-card shadow="hover">
+        <el-card>
           <template #header>
-            <div style="display: flex; justify-content: space-between; align-items: center">
+            <div class="card-header-row">
               <strong>定时任务配置</strong>
               <el-tag size="small" type="primary">运行中</el-tag>
             </div>
@@ -30,24 +30,24 @@
         </el-card>
       </el-col>
       <el-col :span="12">
-        <el-card shadow="hover">
+        <el-card>
           <template #header>
-            <div style="display: flex; justify-content: space-between; align-items: center">
+            <div class="card-header-row">
               <strong>监控概览</strong>
               <el-button type="primary" size="small" @click="refresh">刷新</el-button>
             </div>
           </template>
           <el-row :gutter="12">
             <el-col :span="12">
-              <div class="stat-card">
-                <div class="stat-value">{{ tokens.length }}</div>
-                <div class="stat-label">监控代币数</div>
+              <div class="overview-stat">
+                <div class="overview-stat__value">{{ tokens.length }}</div>
+                <div class="overview-stat__label">监控代币数</div>
               </div>
             </el-col>
             <el-col :span="12">
-              <div class="stat-card">
-                <div class="stat-value">{{ alertCount }}</div>
-                <div class="stat-label">本次会话告警次数</div>
+              <div class="overview-stat">
+                <div class="overview-stat__value">{{ alertCount }}</div>
+                <div class="overview-stat__label">本次会话告警次数</div>
               </div>
             </el-col>
           </el-row>
@@ -56,9 +56,9 @@
     </el-row>
 
     <!-- 代币列表 -->
-    <el-card shadow="hover">
+    <el-card>
       <template #header>
-        <div style="display: flex; justify-content: space-between; align-items: center">
+        <div class="card-header-row">
           <strong>监控代币列表</strong>
           <el-button type="primary" size="small" @click="showAddDialog = true">+ 添加代币</el-button>
         </div>
@@ -73,7 +73,7 @@
         </el-table-column>
         <el-table-column label="最新价" width="140">
           <template #default="{ row }">
-            <span v-if="row.currentPrice" :class="row.currentPrice >= row.baseline ? 'profit' : 'loss'">
+            <span v-if="row.currentPrice" :class="row.currentPrice >= row.baseline ? 'value-positive' : 'value-negative'">
               {{ fmtNum(row.currentPrice, 4) }}
             </span>
             <span v-else>-</span>
@@ -81,7 +81,7 @@
         </el-table-column>
         <el-table-column label="涨跌幅" width="120">
           <template #default="{ row }">
-            <span v-if="row.baseline && row.currentPrice" :class="changeClass(row)">
+            <span v-if="row.baseline && row.currentPrice" :class="pctVal(row) >= 0 ? 'value-positive' : 'value-negative'">
               {{ changePct(row) }}
             </span>
             <span v-else>-</span>
@@ -160,10 +160,6 @@ function changePct(row) {
   return (v >= 0 ? "+" : "") + v.toFixed(2) + "%";
 }
 
-function changeClass(row) {
-  return pctVal(row) >= 0 ? "profit" : "loss";
-}
-
 function fmtTime(iso) {
   if (!iso) return "-";
   return new Date(iso).toLocaleString("zh-CN", { hour12: false });
@@ -227,7 +223,7 @@ async function handleDelete(row) {
 let timer = null;
 onMounted(() => {
   refresh();
-  timer = setInterval(refresh, 10000); // 10 秒自动刷新
+  timer = setInterval(refresh, 10000);
 });
 onUnmounted(() => {
   clearInterval(timer);
@@ -235,9 +231,33 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.stat-card { text-align: center; padding: 12px 0; }
-.stat-value { font-size: 28px; font-weight: bold; color: #303133; }
-.stat-label { font-size: 13px; color: #909399; margin-top: 6px; }
-.profit { color: #22c55e; font-weight: 600; }
-.loss { color: #ef4444; font-weight: 600; }
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.overview-stat {
+  text-align: center;
+  padding: 12px 0;
+}
+
+.overview-stat__value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.2;
+}
+
+.overview-stat__label {
+  font-family: var(--font-body);
+  font-size: var(--text-label-sm-size);
+  font-weight: var(--text-label-sm-weight);
+  letter-spacing: var(--text-label-sm-spacing);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  margin-top: 6px;
+}
 </style>

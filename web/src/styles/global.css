@@ -1,0 +1,264 @@
+/* ═══════════════════════════════════════════════════
+   Architectural Monochrome — Global Styles
+   ═══════════════════════════════════════════════════ */
+
+@import './tokens.css';
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── Base ── */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line);
+  font-weight: var(--text-body-md-weight);
+  color: var(--color-on-background);
+  background-color: var(--color-background);
+  min-height: 100vh;
+}
+
+/* ── Typography Defaults ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-on-surface);
+}
+
+h1 {
+  font-size: var(--text-headline-lg-mobile-size);
+  line-height: var(--text-headline-lg-mobile-line);
+  font-weight: var(--text-headline-lg-weight);
+  letter-spacing: var(--text-headline-lg-spacing);
+}
+
+h2 {
+  font-size: var(--text-headline-md-size);
+  line-height: var(--text-headline-md-line);
+  font-weight: var(--text-headline-md-weight);
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: var(--text-headline-lg-size);
+    line-height: var(--text-headline-lg-line);
+  }
+}
+
+a {
+  color: var(--color-on-surface);
+  text-decoration: none;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+/* ── Utility: Typography Classes ── */
+.text-display-xl {
+  font-family: var(--font-heading);
+  font-size: var(--text-display-xl-size);
+  line-height: var(--text-display-xl-line);
+  font-weight: var(--text-display-xl-weight);
+  letter-spacing: var(--text-display-xl-spacing);
+}
+
+.text-headline-lg {
+  font-family: var(--font-heading);
+  font-size: var(--text-headline-lg-size);
+  line-height: var(--text-headline-lg-line);
+  font-weight: var(--text-headline-lg-weight);
+  letter-spacing: var(--text-headline-lg-spacing);
+}
+
+.text-headline-md {
+  font-family: var(--font-heading);
+  font-size: var(--text-headline-md-size);
+  line-height: var(--text-headline-md-line);
+  font-weight: var(--text-headline-md-weight);
+}
+
+.text-body-lg {
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line);
+  font-weight: var(--text-body-lg-weight);
+}
+
+.text-body-md {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line);
+  font-weight: var(--text-body-md-weight);
+}
+
+.text-label-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-label-sm-size);
+  line-height: var(--text-label-sm-line);
+  font-weight: var(--text-label-sm-weight);
+  letter-spacing: var(--text-label-sm-spacing);
+  text-transform: uppercase;
+}
+
+/* ── Utility: Financial Values ── */
+.value-positive {
+  color: var(--color-positive);
+  font-weight: 600;
+}
+
+.value-negative {
+  color: var(--color-negative);
+  font-weight: 600;
+}
+
+.value-neutral {
+  color: var(--color-on-surface-variant);
+}
+
+/* ── Utility: Stat Display ── */
+.stat-value {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: var(--text-label-sm-size);
+  font-weight: var(--text-label-sm-weight);
+  letter-spacing: var(--text-label-sm-spacing);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  margin-top: 4px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.stat-card .stat-value {
+  font-size: 28px;
+}
+
+.stat-card-sm .stat-value {
+  font-size: 24px;
+}
+
+/* ── Utility: Page Layout ── */
+.page-section {
+  margin-bottom: var(--section-gap-inner);
+}
+
+.page-section:last-child {
+  margin-bottom: 0;
+}
+
+.page-section--tight {
+  margin-bottom: var(--content-gap);
+}
+
+/* ── Utility: Chart Container ── */
+.chart-container {
+  width: 100%;
+  min-height: 280px;
+}
+
+/* ── Utility: Card Grid ── */
+.card-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--tight-gap);
+}
+
+.card-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--tight-gap);
+}
+
+@media (max-width: 1199px) {
+  .card-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card-grid-6 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .card-grid-4,
+  .card-grid-6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Utility: News / List Items ── */
+.news-item {
+  margin-bottom: var(--tight-gap);
+  cursor: pointer;
+}
+
+.news-item:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1199px) {
+  :root {
+    --section-gap-inner: 48px;
+    --content-gap: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-gap-inner: 40px;
+    --content-gap: 20px;
+    --margin-desktop: var(--margin-mobile);
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .stat-card .stat-value {
+    font-size: 22px;
+  }
+}

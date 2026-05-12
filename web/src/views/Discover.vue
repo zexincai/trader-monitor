@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-breadcrumb style="margin-bottom: 16px">
+    <el-breadcrumb class="page-section--tight">
       <el-breadcrumb-item :to="{ path: '/dashboard' }">总览</el-breadcrumb-item>
       <el-breadcrumb-item>发现交易员</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 筛选区域 -->
-    <el-card shadow="hover" style="margin-bottom: 20px">
+    <el-card class="page-section">
       <template #header><strong>筛选条件</strong></template>
       <el-form :inline="true" :model="filters" size="default">
         <el-form-item label="最低胜率">
@@ -41,22 +41,25 @@
       </el-form>
 
       <!-- 快速筛选 -->
-      <div style="margin-top: 8px">
-        <span style="color: #909399; font-size: 13px; margin-right: 8px">快速筛选：</span>
-        <el-tag v-for="preset in presets" :key="preset.label" style="cursor: pointer; margin-right: 8px"
+      <div class="quick-filters">
+        <span class="quick-filters__label">快速筛选：</span>
+        <el-tag
+          v-for="preset in presets" :key="preset.label"
+          class="quick-filters__tag"
           :type="presetActive === preset.label ? 'primary' : 'info'"
-          @click="applyPreset(preset)">
+          @click="applyPreset(preset)"
+        >
           {{ preset.label }}
         </el-tag>
       </div>
     </el-card>
 
     <!-- 搜索结果 -->
-    <el-card shadow="hover">
+    <el-card>
       <template #header>
-        <div style="display: flex; justify-content: space-between; align-items: center">
+        <div class="card-header-row">
           <strong>搜索结果 ({{ traders.length }})</strong>
-          <span style="font-size: 13px; color: #909399">
+          <span class="card-header-row__hint">
             已监控：{{ traders.filter(t => t.monitored).length }} / {{ traders.length }}
           </span>
         </div>
@@ -73,7 +76,9 @@
         <el-table-column prop="authorId" label="ID" width="180" show-overflow-tooltip />
         <el-table-column label="30天盈亏" sortable prop="pnl" width="120">
           <template #default="{ row }">
-            <span :class="Number(row.pnl) >= 0 ? 'profit' : 'loss'">{{ fmtUSD(row.pnl) }}</span>
+            <span :class="Number(row.pnl) >= 0 ? 'value-positive' : 'value-negative'">
+              {{ fmtUSD(row.pnl) }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column label="收益率" sortable prop="pnlRatio" width="100">
@@ -216,6 +221,33 @@ async function removeTrader(row) {
 </script>
 
 <style scoped>
-.profit { color: #67c23a; font-weight: 600; }
-.loss { color: #f56c6c; font-weight: 600; }
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card-header-row__hint {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+}
+
+.quick-filters {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-filters__label {
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+.quick-filters__tag {
+  cursor: pointer;
+}
 </style>

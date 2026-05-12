@@ -1,0 +1,171 @@
+/* ═══════════════════════════════════════════════════
+   Architectural Monochrome — Design Tokens
+   Reference: DESIGN.md
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  /* ── Surface ── */
+  --color-surface: #f9f9f9;
+  --color-surface-dim: #dadada;
+  --color-surface-bright: #f9f9f9;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f3f3f3;
+  --color-surface-container: #eeeeee;
+  --color-surface-container-high: #e8e8e8;
+  --color-surface-container-highest: #e2e2e2;
+
+  /* ── On Surface ── */
+  --color-on-surface: #1a1c1c;
+  --color-on-surface-variant: #4c4546;
+
+  /* ── Inverse ── */
+  --color-inverse-surface: #2f3131;
+  --color-inverse-on-surface: #f1f1f1;
+
+  /* ── Outline ── */
+  --color-outline: #7e7576;
+  --color-outline-variant: #cfc4c5;
+
+  /* ── Primary ── */
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1b1b1b;
+  --color-on-primary-container: #848484;
+  --color-inverse-primary: #c6c6c6;
+
+  /* ── Secondary ── */
+  --color-secondary: #5d5f5f;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #dfe0e0;
+  --color-on-secondary-container: #616363;
+
+  /* ── Tertiary ── */
+  --color-tertiary: #000000;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #1b1c1c;
+  --color-on-tertiary-container: #848484;
+
+  /* ── Error ── */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* ── Fixed accent colors ── */
+  --color-primary-fixed: #e2e2e2;
+  --color-primary-fixed-dim: #c6c6c6;
+  --color-on-primary-fixed: #1b1b1b;
+  --color-on-primary-fixed-variant: #474747;
+  --color-secondary-fixed: #e2e2e2;
+  --color-secondary-fixed-dim: #c6c6c7;
+  --color-on-secondary-fixed: #1a1c1c;
+  --color-on-secondary-fixed-variant: #454747;
+
+  /* ── Background ── */
+  --color-background: #f9f9f9;
+  --color-on-background: #1a1c1c;
+
+  /* ── Surface Variant ── */
+  --color-surface-variant: #e2e2e2;
+
+  /* ── Semantic: Positive / Negative ── */
+  --color-positive: #2d5a3d;
+  --color-positive-bg: #edf2ec;
+  --color-negative: #ba1a1a;
+  --color-negative-bg: #ffdad6;
+
+  /* ── Typography: Font Families ── */
+  --font-heading: 'Metropolis', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-body: 'Hanken Grotesk', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+
+  /* ── Typography: Display XL ── */
+  --text-display-xl-size: 72px;
+  --text-display-xl-line: 80px;
+  --text-display-xl-weight: 700;
+  --text-display-xl-spacing: -0.02em;
+
+  /* ── Typography: Headline LG ── */
+  --text-headline-lg-size: 48px;
+  --text-headline-lg-line: 56px;
+  --text-headline-lg-weight: 600;
+  --text-headline-lg-spacing: -0.01em;
+
+  /* ── Typography: Headline LG Mobile ── */
+  --text-headline-lg-mobile-size: 32px;
+  --text-headline-lg-mobile-line: 40px;
+
+  /* ── Typography: Headline MD ── */
+  --text-headline-md-size: 32px;
+  --text-headline-md-line: 40px;
+  --text-headline-md-weight: 500;
+
+  /* ── Typography: Body LG ── */
+  --text-body-lg-size: 18px;
+  --text-body-lg-line: 28px;
+  --text-body-lg-weight: 400;
+
+  /* ── Typography: Body MD ── */
+  --text-body-md-size: 16px;
+  --text-body-md-line: 24px;
+  --text-body-md-weight: 400;
+
+  /* ── Typography: Label SM ── */
+  --text-label-sm-size: 12px;
+  --text-label-sm-line: 16px;
+  --text-label-sm-weight: 600;
+  --text-label-sm-spacing: 0.05em;
+
+  /* ── Border Radius ── */
+  --radius-sm: 4px;
+  --radius-default: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --radius-container: 0px;
+  --radius-interactive: 8px;
+
+  /* ── Spacing ── */
+  --container-max: 1440px;
+  --gutter: 24px;
+  --margin-desktop: 64px;
+  --margin-tablet: 32px;
+  --margin-mobile: 20px;
+  --section-gap: 128px;
+  --section-gap-inner: 64px;
+  --content-gap: 32px;
+  --element-gap: 24px;
+  --tight-gap: 16px;
+
+  /* ── Elevation (extreme only, for modals) ── */
+  --shadow-extreme: 0 8px 40px rgba(0, 0, 0, 0.08);
+
+  /* ── Glassmorphism ── */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-bg-dark: rgba(0, 0, 0, 0.6);
+  --glass-blur: blur(20px);
+  --glass-border: 1px solid rgba(0, 0, 0, 0.08);
+
+  /* ── Borders ── */
+  --border-hairline: 1px solid #d4d4d4;
+  --border-subtle: 1px solid var(--color-outline-variant);
+  --border-emphasis: 1px solid var(--color-outline);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ── Chart Colors (monochrome palette) ── */
+  --chart-1: #1a1c1c;
+  --chart-2: #4c4546;
+  --chart-3: #7e7576;
+  --chart-4: #5d5f5f;
+  --chart-5: #2f3131;
+  --chart-6: #cfc4c5;
+  --chart-7: #848484;
+  --chart-8: #c6c6c6;
+  --chart-positive: #2d5a3d;
+  --chart-negative: #ba1a1a;
+}
