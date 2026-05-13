@@ -6,6 +6,8 @@ import snapshotsRouter from "./routes/snapshots.js";
 import positionsRouter from "./routes/positions.js";
 import newsRouter from "./routes/news.js";
 import tokensRouter from "./routes/tokens.js";
+import settingsRouter from "./routes/settings.js";
+import dailyReportRouter from "./routes/daily-report.js";
 import { runMonitor } from "./services/monitor.js";
 import { startTokenMonitor } from "./services/token-monitor.js";
 
@@ -20,6 +22,8 @@ app.use("/api/snapshots", snapshotsRouter);
 app.use("/api/positions", positionsRouter);
 app.use("/api/news", newsRouter);
 app.use("/api/tokens", tokensRouter);
+app.use("/api/settings", settingsRouter);
+app.use("/api/daily-report", dailyReportRouter);
 
 // 健康检查
 app.get("/api/health", (_req, res) => {
@@ -111,6 +115,10 @@ app.listen(config.server.port, () => {
   console.log(`  POST /api/tokens/run`);
   console.log(`  POST /api/monitor/run`);
   console.log(`  GET  /api/monitor/logs`);
+  console.log(`  GET  /api/settings`);
+  console.log(`  PUT  /api/settings`);
+  console.log(`  POST /api/settings/test-feishu`);
+  console.log(`  GET  /api/daily-report`);
   console.log("");
 
   startScheduler();

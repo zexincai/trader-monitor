@@ -9,12 +9,16 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONFIG_PATH = path.join(__dirname, "..", "config.json");
 
-function getApiKey() {
+function getDeepseekConfig() {
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
   const key = config.deepseek?.apiKey || process.env.DEEPSEEK_API_KEY;
   if (!key) throw new Error("DeepSeek API Key 未配置，请在 config.json 中设置 deepseek.apiKey");
-  const model = config.deepseek?.model || "deepseek-chat";
-  return { apiKey: key, model };
+  return {
+    apiKey: key,
+    model: config.deepseek?.model || "deepseek-chat",
+    temperature: config.deepseek?.temperature ?? 0.3,
+    maxTokens: config.deepseek?.maxTokens ?? 2000,
+  };
 }
 
 const SYSTEM_PROMPT = `你是一位专业的加密货币市场分析师。请根据提供的新闻列表，生成一份简洁有力的市场分析报告。
@@ -44,7 +48,7 @@ const SYSTEM_PROMPT = `你是一位专业的加密货币市场分析师。请根
  * @returns {Object} 结构化分析结果
  */
 export async function analyzeNews(newsItems) {
-  const { apiKey, model } = getApiKey();
+  const { apiKey, model, temperature, maxTokens } = getDeepseekConfig();
 
   // 构建新闻摘要
   const newsText = newsItems.map((n, i) => {
@@ -67,8 +71,8 @@ export async function analyzeNews(newsItems) {
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: `请分析以下加密市场新闻：\n\n${newsText}` },
       ],
-      temperature: 0.3,
-      max_tokens: 2000,
+      temperature,
+      max_tokens: maxTokens,
     }),
   });
 

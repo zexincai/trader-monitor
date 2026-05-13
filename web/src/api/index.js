@@ -59,3 +59,23 @@ export function addToken(instId, label) {
 export function deleteToken(instId) {
   return api.delete(`/tokens/${encodeURIComponent(instId)}`).then((r) => r.data);
 }
+
+// ── 系统设置 ──
+
+export function fetchSettings() {
+  return get("/settings");
+}
+
+export function updateSettings(section, data) {
+  return api.put("/settings", { section, data }).then((r) => r.data);
+}
+
+export function testFeishu() {
+  return api.post("/settings/test-feishu").then((r) => r.data);
+}
+
+// ── 每日报告 ──
+
+export function fetchDailyReport() {
+  return get("/daily-report");
+}

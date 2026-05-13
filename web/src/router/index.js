@@ -5,6 +5,7 @@ import TraderDetail from "../views/TraderDetail.vue";
 import PositionMonitor from "../views/PositionMonitor.vue";
 import Discover from "../views/Discover.vue";
 import Tokens from "../views/Tokens.vue";
+import Settings from "../views/Settings.vue";
 
 const routes = [
   { path: "/", name: "News", component: News },
@@ -13,6 +14,7 @@ const routes = [
   { path: "/positions", name: "PositionMonitor", component: PositionMonitor },
   { path: "/discover", name: "Discover", component: Discover },
   { path: "/tokens", name: "Tokens", component: Tokens },
+  { path: "/settings", name: "Settings", component: Settings },
 ];
 
 export default createRouter({
