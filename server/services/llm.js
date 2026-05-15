@@ -11,8 +11,8 @@ const CONFIG_PATH = path.join(__dirname, "..", "config.json");
 
 function getDeepseekConfig() {
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf-8"));
-  const key = config.deepseek?.apiKey || process.env.DEEPSEEK_API_KEY;
-  if (!key) throw new Error("DeepSeek API Key 未配置，请在 config.json 中设置 deepseek.apiKey");
+  const key = process.env.DEEPSEEK_API_KEY;
+  if (!key) throw new Error("DeepSeek API Key is not configured. Set DEEPSEEK_API_KEY in the environment.");
   return {
     apiKey: key,
     model: config.deepseek?.model || "deepseek-chat",

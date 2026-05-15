@@ -5,6 +5,14 @@ const api = axios.create({
   timeout: 15000,
 });
 
+api.interceptors.request.use((config) => {
+  const token = import.meta.env.VITE_API_TOKEN || localStorage.getItem("apiToken");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export default api;
 
 // GET 封装

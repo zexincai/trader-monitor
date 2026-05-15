@@ -2,12 +2,12 @@ import { Router } from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { promisify } from "util";
 import { getTraders, getTraderById, getAvailableDates } from "../services/storage.js";
 
 const router = Router();
-const execP = promisify(exec);
+const execFileP = promisify(execFile);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONFIG_PATH = path.join(__dirname, "..", "config.json");
 
@@ -21,13 +21,9 @@ function writeConfig(config) {
 
 // 安全执行 okx CLI 命令
 async function runOkx(args) {
-  const esc = (arg) => {
-    if (/^[a-zA-Z0-9_,.:/@%+=\-]+$/.test(String(arg))) return String(arg);
-    return `"${String(arg).replace(/"/g, '\\"')}"`;
-  };
-  const cmd = "okx " + args.map(esc).join(" ");
-  console.log("[okx]", cmd);
-  const { stdout } = await execP(cmd, { timeout: 60000, maxBuffer: 10 * 1024 * 1024 });
+  const safeArgs = args.map(String);
+  console.log("[okx]", ["okx", ...safeArgs].join(" "));
+  const { stdout } = await execFileP("okx", safeArgs, { timeout: 60000, maxBuffer: 10 * 1024 * 1024 });
   return JSON.parse(stdout);
 }
 

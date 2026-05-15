@@ -111,11 +111,7 @@ router.put("/", (req, res) => {
       }
       case "deepseek": {
         config.deepseek = config.deepseek || {};
-        if (data.apiKey !== undefined) {
-          if (data.apiKey && !data.apiKey.includes("***")) {
-            config.deepseek.apiKey = data.apiKey;
-          }
-        }
+        delete config.deepseek.apiKey;
         if (data.model !== undefined) {
           config.deepseek.model = data.model;
         }

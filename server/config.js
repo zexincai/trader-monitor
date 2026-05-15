@@ -10,5 +10,7 @@ export default {
   },
   server: {
     port: parseInt(process.env.SERVER_PORT || "3000", 10),
+    apiToken: process.env.API_TOKEN || "",
+    corsOrigin: process.env.CORS_ORIGIN || "",
   },
 };

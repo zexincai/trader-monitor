@@ -4,13 +4,13 @@
  * 每分钟拉取 OKX 行情，涨幅超过阈值时通过飞书告警。
  * 告警后重置基准价，继续监控。
  */
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const execP = promisify(exec);
+const execFileP = promisify(execFile);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONFIG_PATH = path.join(__dirname, "..", "config.json");
 
@@ -29,13 +29,9 @@ function loadConfig() {
 }
 
 async function runOkx(args) {
-  const esc = (arg) => {
-    if (/^[a-zA-Z0-9_,.:/@%+=\-]+$/.test(String(arg))) return String(arg);
-    return `"${String(arg).replace(/"/g, '\\"')}"`;
-  };
-  const cmd = "okx " + args.map(esc).join(" ");
+  const safeArgs = args.map(String);
   try {
-    const { stdout } = await execP(cmd, { timeout: 30000, maxBuffer: 1024 * 1024 });
+    const { stdout } = await execFileP("okx", safeArgs, { timeout: 30000, maxBuffer: 1024 * 1024 });
     return JSON.parse(stdout);
   } catch (err) {
     console.error(`[token-monitor] okx 调用失败:`, err.message.trim());

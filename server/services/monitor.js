@@ -7,14 +7,14 @@
  *   trader-positions       → 当前持仓
  *   trader-orders-history  → 历史成交
  */
-import { exec } from "child_process";
+import { execFile } from "child_process";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import * as storage from "./storage.js";
 
-const execP = promisify(exec);
+const execFileP = promisify(execFile);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONFIG_PATH = path.join(__dirname, "..", "config.json");
 const REPORT_DIR = path.join(__dirname, "..", "reports");
@@ -48,15 +48,10 @@ function loadConfig() {
 
 // ── 数据采集 ──
 
-function escapeArg(arg) {
-  if (/^[a-zA-Z0-9_,.:/@%+=\-]+$/.test(String(arg))) return String(arg);
-  return `"${String(arg).replace(/"/g, '\\"')}"`;
-}
-
 async function runOkx(args) {
-  const cmd = "okx " + args.map(escapeArg).join(" ");
+  const safeArgs = args.map(String);
   try {
-    const { stdout } = await execP(cmd, { timeout: 60000, maxBuffer: 10 * 1024 * 1024 });
+    const { stdout } = await execFileP("okx", safeArgs, { timeout: 60000, maxBuffer: 10 * 1024 * 1024 });
     return JSON.parse(stdout);
   } catch (err) {
     console.error(`  [ERR] okx ${args.slice(0, 4).join(" ")} 失败:`, err.message.trim());

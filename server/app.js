@@ -10,11 +10,19 @@ import settingsRouter from "./routes/settings.js";
 import dailyReportRouter from "./routes/daily-report.js";
 import { runMonitor } from "./services/monitor.js";
 import { startTokenMonitor } from "./services/token-monitor.js";
+import { requireApiToken } from "./middleware/auth.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors(config.server.corsOrigin ? { origin: config.server.corsOrigin } : undefined));
 app.use(express.json());
+
+// Health check stays public so Docker/proxies can probe the service.
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok", time: new Date().toISOString() });
+});
+
+app.use("/api", requireApiToken);
 
 // API 路由
 app.use("/api/traders", tradersRouter);
@@ -25,24 +33,29 @@ app.use("/api/tokens", tokensRouter);
 app.use("/api/settings", settingsRouter);
 app.use("/api/daily-report", dailyReportRouter);
 
-// 健康检查
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", time: new Date().toISOString() });
-});
+let lastRunLogs = [];
+let monitorRunning = false;
 
 // 手动触发监控
 app.post("/api/monitor/run", async (req, res) => {
+  if (monitorRunning) {
+    return res.status(409).json({ code: -1, msg: "Monitor is already running" });
+  }
+
+  monitorRunning = true;
   try {
     const noFeishu = req.body?.noFeishu ?? req.query?.noFeishu ?? false;
     const result = await runMonitor({ noFeishu });
+    lastRunLogs = result.logs || [];
     res.json({ code: 0, data: result });
   } catch (err) {
     res.status(500).json({ code: -1, msg: err.message });
+  } finally {
+    monitorRunning = false;
   }
 });
 
 // 查看最近一次运行日志
-let lastRunLogs = [];
 app.get("/api/monitor/logs", (_req, res) => {
   res.json({ code: 0, data: lastRunLogs });
 });
