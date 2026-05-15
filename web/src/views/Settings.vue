@@ -197,4 +197,11 @@ onMounted(loadSettings);
   font-family: var(--font-mono);
   margin-left: 8px;
 }
+
+@media (max-width: 767px) {
+  .form-hint-inline {
+    display: block;
+    margin: 6px 0 0;
+  }
+}
 </style>

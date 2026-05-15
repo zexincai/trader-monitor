@@ -52,13 +52,13 @@
 
       <!-- 图表行 -->
       <el-row :gutter="12" class="page-section">
-        <el-col :span="12">
+        <el-col :xs="24" :md="12">
           <el-card>
             <template #header><strong>PNL_HISTORY</strong></template>
             <v-chart :option="pnlChartOption" style="height: 300px" autoresize />
           </el-card>
         </el-col>
-        <el-col :span="12">
+        <el-col :xs="24" :md="12">
           <el-card>
             <template #header><strong>WIN_RATE_LEVERAGE</strong></template>
             <v-chart :option="leverChartOption" style="height: 300px" autoresize />
@@ -68,13 +68,13 @@
 
       <!-- 窗口 + 偏好 -->
       <el-row :gutter="12" class="page-section">
-        <el-col :span="12">
+        <el-col :xs="24" :md="12">
           <el-card>
             <template #header><strong>PNL_WINDOWS</strong></template>
             <v-chart :option="windowPnlOption" style="height: 280px" autoresize />
           </el-card>
         </el-col>
-        <el-col :span="12">
+        <el-col :xs="24" :md="12">
           <el-card>
             <template #header><strong>COIN_PREF_1M</strong></template>
             <v-chart v-if="preferences.length" :option="coinPrefOption" style="height: 280px" autoresize />

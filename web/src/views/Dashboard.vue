@@ -39,13 +39,13 @@
 
     <!-- 图表行 -->
     <el-row :gutter="12" class="page-section">
-      <el-col :span="14">
+      <el-col :xs="24" :lg="14">
         <el-card>
           <template #header><strong>PNL_TREND_30D</strong></template>
           <v-chart :option="pnlTrendOption" style="height: 320px" autoresize />
         </el-card>
       </el-col>
-      <el-col :span="10">
+      <el-col :xs="24" :lg="10">
         <el-card>
           <template #header><strong>RISK_REWARD_MATRIX</strong></template>
           <v-chart :option="riskScatterOption" style="height: 320px" autoresize />

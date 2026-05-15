@@ -37,21 +37,21 @@
 
     <!-- 图表行 -->
     <el-row :gutter="12" class="page-section">
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <el-card>
           <template #header><strong>LONG_SHORT_RATIO</strong></template>
           <v-chart v-if="positions.length" :option="pieOption" style="height: 260px" autoresize />
           <el-empty v-else description="NO_DATA" />
         </el-card>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <el-card>
           <template #header><strong>UPL_RANKING</strong></template>
           <v-chart v-if="positions.length" :option="uplBarOption" style="height: 260px" autoresize />
           <el-empty v-else description="NO_DATA" />
         </el-card>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <el-card>
           <template #header><strong>CONCENTRATION</strong></template>
           <v-chart v-if="positions.length" :option="concentrationOption" style="height: 260px" autoresize />

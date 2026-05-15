@@ -1,0 +1,10 @@
+{
+  "name": "trader-monitor",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run dev --prefix server & npm run dev --prefix web & wait",
+    "server": "npm run dev --prefix server",
+    "web": "npm run dev --prefix web",
+    "init-db": "node server/init_db.js"
+  }
+}

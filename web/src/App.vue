@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="app-shell">
     <!-- Grid Background -->
     <div class="grid-bg"></div>
@@ -77,6 +77,19 @@
       <router-view />
     </main>
 
+    <nav class="app-mobile-nav">
+      <router-link
+        v-for="item in sidebarNavItems"
+        :key="item.path"
+        :to="item.path"
+        class="app-mobile-nav__link"
+        :class="{ 'app-mobile-nav__link--active': currentRoute === item.path }"
+      >
+        <span class="material-symbols-outlined">{{ item.icon }}</span>
+        <span>{{ item.shortLabel }}</span>
+      </router-link>
+    </nav>
+
     <!-- Daily Report Modal -->
     <DailyReportModal :visible="showReportModal" @close="showReportModal = false" />
   </div>
@@ -102,12 +115,12 @@ const topNavItems = [
 ];
 
 const sidebarNavItems = [
-  { path: "/", label: "资讯", icon: "show_chart" },
-  { path: "/dashboard", label: "总览", icon: "account_balance" },
-  { path: "/positions", label: "持仓监控", icon: "account_balance_wallet" },
-  { path: "/discover", label: "发现交易员", icon: "group" },
-  { path: "/tokens", label: "代币监控", icon: "terminal" },
-  { path: "/settings", label: "设置", icon: "settings" },
+  { path: "/", label: "资讯", shortLabel: "资讯", icon: "show_chart" },
+  { path: "/dashboard", label: "总览", shortLabel: "总览", icon: "account_balance" },
+  { path: "/positions", label: "持仓监控", shortLabel: "持仓", icon: "account_balance_wallet" },
+  { path: "/discover", label: "发现交易员", shortLabel: "交易员", icon: "group" },
+  { path: "/tokens", label: "代币监控", shortLabel: "代币", icon: "terminal" },
+  { path: "/settings", label: "设置", shortLabel: "设置", icon: "settings" },
 ];
 
 function handleRefresh() {
@@ -120,13 +133,13 @@ function goAiAnalysis() {
 </script>
 
 <style scoped>
-/* ── Shell ── */
+/* 鈹€鈹€ Shell 鈹€鈹€ */
 .app-shell {
   min-height: 100vh;
   position: relative;
 }
 
-/* ── Header ── */
+/* 鈹€鈹€ Header 鈹€鈹€ */
 .app-header {
   position: fixed;
   top: 0;
@@ -156,7 +169,7 @@ function goAiAnalysis() {
   gap: var(--space-margin-desktop);
 }
 
-/* ── Brand ── */
+/* 鈹€鈹€ Brand 鈹€鈹€ */
 .app-brand {
   font-family: var(--font-heading);
   font-size: var(--text-data-lg-size);
@@ -167,7 +180,7 @@ function goAiAnalysis() {
   white-space: nowrap;
 }
 
-/* ── Header Nav ── */
+/* 鈹€鈹€ Header Nav 鈹€鈹€ */
 .app-header__nav {
   display: none;
   gap: var(--space-comfortable);
@@ -202,14 +215,14 @@ function goAiAnalysis() {
   text-shadow: var(--glow-primary);
 }
 
-/* ── Header Right ── */
+/* 鈹€鈹€ Header Right 鈹€鈹€ */
 .app-header__right {
   display: flex;
   align-items: center;
   gap: var(--space-comfortable);
 }
 
-/* ── AI Button ── */
+/* 鈹€鈹€ AI Button 鈹€鈹€ */
 .app-header__ai-btn {
   display: none;
   align-items: center;
@@ -247,7 +260,7 @@ function goAiAnalysis() {
   font-size: 18px;
 }
 
-/* ── Action Icons ── */
+/* 鈹€鈹€ Action Icons 鈹€鈹€ */
 .app-header__actions {
   display: flex;
   gap: var(--space-compact);
@@ -265,7 +278,7 @@ function goAiAnalysis() {
   filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.8));
 }
 
-/* ── Sidebar ── */
+/* 鈹€鈹€ Sidebar 鈹€鈹€ */
 .app-sidebar {
   position: fixed;
   left: 0;
@@ -288,7 +301,7 @@ function goAiAnalysis() {
   }
 }
 
-/* ── Sidebar Profile ── */
+/* 鈹€鈹€ Sidebar Profile 鈹€鈹€ */
 .app-sidebar__profile {
   padding: var(--space-comfortable);
   margin-bottom: var(--space-compact);
@@ -344,7 +357,7 @@ function goAiAnalysis() {
   margin-top: 4px;
 }
 
-/* ── Sidebar Nav ── */
+/* 鈹€鈹€ Sidebar Nav 鈹€鈹€ */
 .app-sidebar__nav {
   flex: 1;
   display: flex;
@@ -381,7 +394,7 @@ function goAiAnalysis() {
   font-size: 20px;
 }
 
-/* ── Sidebar Footer ── */
+/* 鈹€鈹€ Sidebar Footer 鈹€鈹€ */
 .app-sidebar__footer {
   padding: var(--space-comfortable);
 }
@@ -406,7 +419,7 @@ function goAiAnalysis() {
   box-shadow: 0 0 15px rgba(218, 185, 255, 0.4);
 }
 
-/* ── Main Content ── */
+/* 鈹€鈹€ Main Content 鈹€鈹€ */
 .app-main {
   padding-top: var(--header-height);
   padding-left: var(--space-margin-desktop);
@@ -421,7 +434,7 @@ function goAiAnalysis() {
   }
 }
 
-/* ── Responsive ── */
+/* 鈹€鈹€ Responsive 鈹€鈹€ */
 @media (max-width: 767px) {
   .app-header__inner {
     padding: 0 var(--space-margin-mobile);
@@ -429,6 +442,77 @@ function goAiAnalysis() {
   .app-main {
     padding-left: var(--space-margin-mobile);
     padding-right: var(--space-margin-mobile);
+  }
+}
+.app-mobile-nav {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .app-shell {
+    --header-height: 56px;
+  }
+  .app-header__left {
+    min-width: 0;
+    gap: 12px;
+  }
+  .app-brand {
+    max-width: 48vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .app-header__right,
+  .app-header__actions {
+    gap: 8px;
+  }
+  .app-header__icon {
+    font-size: 19px;
+  }
+  .app-main {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+  .app-mobile-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    min-height: calc(64px + env(safe-area-inset-bottom));
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    background: rgba(11, 14, 20, 0.92);
+    border-top: 1px solid rgba(58, 73, 75, 0.35);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .app-mobile-nav__link {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--color-on-surface-variant);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 10px;
+    line-height: 1.1;
+    text-align: center;
+    overflow: hidden;
+  }
+  .app-mobile-nav__link .material-symbols-outlined {
+    font-size: 20px;
+  }
+  .app-mobile-nav__link span:last-child {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .app-mobile-nav__link--active {
+    color: var(--color-primary-container);
+    text-shadow: var(--glow-primary);
   }
 }
 </style>

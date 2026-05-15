@@ -7,7 +7,7 @@
 
     <!-- Config + Overview -->
     <el-row :gutter="12" class="page-section">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <el-card>
           <template #header>
             <div class="card-header-row">
@@ -26,7 +26,7 @@
           </el-descriptions>
         </el-card>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <el-card>
           <template #header>
             <div class="card-header-row">

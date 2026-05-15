@@ -39,7 +39,7 @@
             <p v-if="analysis.sentimentReason" class="ai-summary-reason">{{ analysis.sentimentReason }}</p>
           </div>
           <el-row :gutter="12">
-            <el-col :span="14">
+            <el-col :xs="24" :md="14">
               <p class="ai-section-label glow-primary" style="margin-bottom:8px">INVESTMENT OPPORTUNITIES</p>
               <div v-if="analysis.opportunities && analysis.opportunities.length">
                 <div v-for="(op, i) in analysis.opportunities" :key="i" class="ai-opp-item">
@@ -54,7 +54,7 @@
               </div>
               <p v-else class="text-data-sm" style="color:var(--color-outline)">NO_DATA</p>
             </el-col>
-            <el-col :span="10">
+            <el-col :xs="24" :md="10">
               <p class="ai-section-label" style="color:var(--color-error);margin-bottom:8px">RISK ALERTS</p>
               <div v-if="analysis.risks && analysis.risks.length">
                 <div v-for="(r, i) in analysis.risks" :key="i" class="ai-risk-item">{{ r }}</div>
@@ -508,5 +508,45 @@ onMounted(() => { fetchNews(); fetchAnalysis(); fetchAiItems(true); fetchAiDaily
   color: var(--color-on-primary-container);
   border-color: var(--color-primary-container);
   box-shadow: 0 0 8px rgba(0,242,255,0.3);
+}
+
+@media (max-width: 767px) {
+  .page-header__meta,
+  .news-card__top,
+  .daily-section__item {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tab-switcher {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .tab-switcher__btn {
+    flex: 1 0 auto;
+    padding: 8px 12px;
+  }
+  .news-card__title {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+  .news-card__bottom,
+  .news-card__bottom-tags {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .ai-opp-item__header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .category-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .category-filter__btn {
+    flex: 0 0 auto;
+  }
 }
 </style>

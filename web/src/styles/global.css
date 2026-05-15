@@ -234,4 +234,90 @@ h1 {
   .stat-value {
     font-size: 16px;
   }
+  body {
+    overflow-x: hidden;
+  }
+  .page-toolbar {
+    align-items: stretch;
+    gap: 12px;
+  }
+  .page-toolbar > * {
+    min-width: 0;
+    width: 100%;
+  }
+  .page-toolbar__actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .card-header-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .card-header-row .el-input,
+  .card-header-row .el-button {
+    width: 100%;
+  }
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .el-row {
+    row-gap: 12px;
+  }
+  .el-col {
+    max-width: 100%;
+  }
+  .el-table {
+    width: 100%;
+  }
+  .el-table .cell {
+    word-break: keep-all;
+  }
+  .el-form--inline {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .el-form--inline .el-form-item {
+    margin-right: 0;
+    width: 100%;
+  }
+  .el-form--inline .el-form-item__content,
+  .el-form .el-input,
+  .el-form .el-select,
+  .el-form .el-input-number {
+    width: 100% !important;
+  }
+  .el-form:not(.el-form--inline) .el-form-item {
+    display: block;
+  }
+  .el-form:not(.el-form--inline) .el-form-item__label {
+    display: block;
+    width: auto !important;
+    height: auto;
+    margin-bottom: 6px;
+    text-align: left;
+  }
+  .el-form:not(.el-form--inline) .el-form-item__content {
+    margin-left: 0 !important;
+    display: block;
+  }
+  .el-radio-group,
+  .el-checkbox-group {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .el-tabs--border-card > .el-tabs__header .el-tabs__nav {
+    display: flex;
+    min-width: max-content;
+  }
+  .el-tabs--border-card > .el-tabs__header {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .el-dialog {
+    width: calc(100vw - 32px) !important;
+    margin-top: 10vh !important;
+  }
 }
